@@ -24,7 +24,7 @@ tx_q = Queue()
 rx_q = Queue()
 
 targetDeviceName=None
-targetDeviceMac="D8:3A:DD:B8:9E:86"
+targetDeviceMac="D8:3A:DD:D9:6C:7F"
 
 def init_ble_thread():
     # Creating a new thread for running a function 'run' with specified arguments.
@@ -46,7 +46,7 @@ def show_preds_video(video_path, conf_threshold):
                           cv2.VideoWriter_fourcc(*'MJPG'), fps, (w, h))
 
 
-
+    tx_q.put(targetDeviceMac)
 
 
 
