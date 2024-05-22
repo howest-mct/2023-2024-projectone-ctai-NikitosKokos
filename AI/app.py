@@ -46,7 +46,7 @@ def show_preds_video(video_path, conf_threshold):
                           cv2.VideoWriter_fourcc(*'MJPG'), fps, (w, h))
 
 
-
+    tx_q.put(targetDeviceMac)
 
 
 
