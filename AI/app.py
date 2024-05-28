@@ -15,7 +15,7 @@ import gradio as gr  # Importing Gradio library for creating web interfaces.
 
 print("start")
 
-model = YOLO("AI/runs/detect/train5/weights/best.pt")
+model = YOLO("AI/runs/detect/train4/weights/best.pt")
 bounding_box_annotator = sv.BoundingBoxAnnotator()
 label_annotator = sv.LabelAnnotator()
 
