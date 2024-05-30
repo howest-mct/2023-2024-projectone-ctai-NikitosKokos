@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <h2>
+        Add customer
+    </h2>
+
+    <p>
+        Add a customer to the database. The customer has a first name (VNaam), a family name (FNaam), a street (Straat),
+        a
+        number (Nr), a postcode (Postcode) and a city (Gemeente). The customer is added to the database when the form is
+        submitted.
+        Every input that has a name, will be sent to the server when the form is submitted. 
+        In Python you can access the values of the inputs with the request.form dictionary.
+    </p>
+    <form action="/customers_add" method="post">
+        <label for="Name">Firstname:</label><br>
+        <input type="text" id="Name" name="VNaam"><br>
+        <label for="FName">Name:</label><br>
+        <input type="text" id="FName" name="FNaam"><br>
+        <label for="Street">Street:</label><br>
+        <input type="text" id="Street" name="Straat"><br>
+        <label for="Nr">Nr:</label><br>
+        <input type="text" id="Nr" name="Nummer"><br>
+        <label for="Postcode">Postcode:</label><br>
+        <input type="text" id="Postcode" name="Postcode"><br>
+        <label for="City">City:</label><br>
+        <input type="text" id="City" name="Gemeente"><br>
+        <input type="submit" value="Submit">
+
+        <h2>
+            show customers
+        </h2>
+        Loop over the customers and show them in a list. The property FNaam is the Family name of the customer. (FNaam
+        is
+        the Dutch abbreviation for Family name.) It is the field that is used in the database
+        <ul>
+            {% for customer in persons %}
+            <li>{{ customer.FNaam }}</li>
+            {% endfor %}
+        </ul>
+
+    </form>
+</body>
+
+</html>

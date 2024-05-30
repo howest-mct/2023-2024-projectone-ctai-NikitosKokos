@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>	<title>All Users</title>	<meta charset="UTF-8">	<meta name="format-detection" content="telephone=no">	<link rel="stylesheet" href="static/css/style.min.css">	<!-- <meta name="theme-color" content="#fff"> -->	<!-- <meta name="theme-color" content="#F2709C"/>	 -->	<link rel="shortcut icon" href="static/img/logo/icon.svg">	<!-- <meta name="robots" content="noindex, nofollow"> -->	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->	<meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+   <body>
+      <div class="users" data-new="{{ the_new_id }}">
+         <div class="users__body">
+            <div class="users__title"><h1>All Users</h1></div>
+            <ul class="users__list">
+               {% for customer in persons %}
+                  <li>{{ customer.FNaam }}</li>
+               {% endfor %}
+               <li class="users__item">
+                  <div class="users__name">Mykyta Tsykunov</div>
+                  <div class="users__info">
+                     <div class="users__type">
+                        Teacher
+                     </div>
+                     <div class="users__honorific">
+                        -
+                     </div>
+                  </div>
+               </li>
+               <li class="users__item">
+                  <div class="users__name">Mykyta Tsykunov</div>
+                  <div class="users__info">
+                     <div class="users__type">
+                        Teacher
+                     </div>
+                     <div class="users__honorific">
+                        -
+                     </div>
+                  </div>
+               </li>
+               <li class="users__item">
+                  <div class="users__name">Mykyta Tsykunov</div>
+                  <div class="users__info">
+                     <div class="users__type">
+                        Teacher
+                     </div>
+                     <div class="users__honorific">
+                        -
+                     </div>
+                  </div>
+               </li>
+               <li class="users__item">
+                  <div class="users__name">Mykyta Tsykunov</div>
+                  <div class="users__info">
+                     <div class="users__type">
+                        Teacher
+                     </div>
+                     <div class="users__honorific">
+                        -
+                     </div>
+                  </div>
+               </li>
+               <li class="users__item">
+                  <div class="users__name">Mykyta Tsykunov</div>
+                  <div class="users__info">
+                     <div class="users__type">
+                        Teacher
+                     </div>
+                     <div class="users__honorific">
+                        -
+                     </div>
+                  </div>
+               </li>
+               <li class="users__item">
+                  <div class="users__name">Mykyta Tsykunov</div>
+                  <div class="users__info">
+                     <div class="users__type">
+                        Teacher
+                     </div>
+                     <div class="users__honorific">
+                        -
+                     </div>
+                  </div>
+               </li>
+               <li class="users__item">
+                  <div class="users__name">Mykyta Tsykunov</div>
+                  <div class="users__info">
+                     <div class="users__type">
+                        Teacher
+                     </div>
+                     <div class="users__honorific">
+                        -
+                     </div>
+                  </div>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <script src="static/js/vendors.min.js"></script>
+      <script src="static/js/app.min.js"></script>
+   </body>
+</html>
