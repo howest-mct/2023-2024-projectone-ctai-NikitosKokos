@@ -10,6 +10,8 @@
 
 # Feedforward Conversations
 
+### Week 1
+
 ## Conversation 1 (Date: 23/05/2024)
 
 Lecturer: Marie
@@ -34,6 +36,8 @@ This is the feedback on my questions.
 
 - Feedback 1: I spoke to **Frederik**, we have discussed how my database would look like and how to connect to it, he said he will send me some guides on how to implement mySQL database in python.
 
+### Week 2
+
 ## Conversation 3 (Date: 24/05/2024)
 
 Lecturer: Tijn
@@ -57,3 +61,19 @@ Questions for this conversation:
 This is the feedback on my questions.
 
 - Feedback 1: I have an a consultation with **Christophe**, my idea was to create some sort of web service, but it turned out to be a very difficult task for the first project. Because I wanted to use a webapp, MySQL database, my AI model and raspi all at once. Christophe advised to create some separate scripts, for instance: I run the script signup.py to sign up and save the user to the database, then run script for recording user's face and train face recognition model. And last but not least I run my app.py, connect to my raspi and do face authentication, if the authentication ends up successfully, It will show a welcome message on an LCD Display. The problem is I wanted all these "actions" to be in my webapp, so I needed some web service to connect to my model and send some images(don't forget that we need talk to raspi from this web service as well), and that is the topic of the 2nd year of MCT CT&AI. He sent me an example of Flask website, I'm going to use it to create a simple form page, where you can sign up and your data will be saved in MySQL database.
+
+### Week 3
+
+## Conversation 5 (Date: 03/06/2024)
+
+Lecturer: Marie
+
+Questions for this conversation:
+
+- [x] Question 1: How to improve my model for face detection? Can I use Bounding Box: Rotation, Shear, Brightness for the augmentation?
+- [x] Question 2: How to make model for face recognition and what is the possible solutions for this?
+
+This is the feedback on my questions.
+
+- Feedback 1: Marie said my model is working well, I can add some more data, but it detects faces with a good accuracy. As for the augmentation, it can be dangerous for my model to use these settings, but you can try and check if it's good for your model
+- Feedback 2: You can train one model and do you vs others, and then when a new user added, train this model again. I think that is the best option. The second option is to create each time a new model user vs others and compare them together to choose the best accuracy. But it's more difficult.  Marie also advised to use yolov8n(Nano) then yolov8s(Small) for better training time
