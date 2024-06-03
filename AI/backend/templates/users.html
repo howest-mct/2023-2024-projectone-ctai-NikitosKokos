@@ -2,91 +2,63 @@
 <html lang="en">
     <head>	<title>All Users</title>	<meta charset="UTF-8">	<meta name="format-detection" content="telephone=no">	<link rel="stylesheet" href="static/css/style.min.css">	<!-- <meta name="theme-color" content="#fff"> -->	<!-- <meta name="theme-color" content="#F2709C"/>	 -->	<link rel="shortcut icon" href="static/img/logo/icon.svg">	<!-- <meta name="robots" content="noindex, nofollow"> -->	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->	<meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
    <body>
-      <div class="users" data-new="{{ the_new_id }}">
+      <div class="users">
+         {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="users__popup">
+                    {% for category, message in messages %}
+                        <div class="users__added">
+                            <div class="users__check">
+                                <span></span>
+                                <picture><source srcset="static/img/icons/check.svg" type="image/webp"><img src="static/img/icons/check.svg" alt=""></picture>
+                            </div>
+                            <div class="users__text">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
          <div class="users__body">
-            <div class="users__title"><h1>All Users</h1></div>
-            <ul class="users__list">
-               {% for customer in persons %}
-                  <li>{{ customer.FNaam }}</li>
-               {% endfor %}
-               <li class="users__item">
-                  <div class="users__name">Mykyta Tsykunov</div>
-                  <div class="users__info">
-                     <div class="users__type">
-                        Teacher
-                     </div>
-                     <div class="users__honorific">
-                        -
-                     </div>
-                  </div>
-               </li>
-               <li class="users__item">
-                  <div class="users__name">Mykyta Tsykunov</div>
-                  <div class="users__info">
-                     <div class="users__type">
-                        Teacher
-                     </div>
-                     <div class="users__honorific">
-                        -
-                     </div>
-                  </div>
-               </li>
-               <li class="users__item">
-                  <div class="users__name">Mykyta Tsykunov</div>
-                  <div class="users__info">
-                     <div class="users__type">
-                        Teacher
-                     </div>
-                     <div class="users__honorific">
-                        -
-                     </div>
-                  </div>
-               </li>
-               <li class="users__item">
-                  <div class="users__name">Mykyta Tsykunov</div>
-                  <div class="users__info">
-                     <div class="users__type">
-                        Teacher
-                     </div>
-                     <div class="users__honorific">
-                        -
-                     </div>
-                  </div>
-               </li>
-               <li class="users__item">
-                  <div class="users__name">Mykyta Tsykunov</div>
-                  <div class="users__info">
-                     <div class="users__type">
-                        Teacher
-                     </div>
-                     <div class="users__honorific">
-                        -
-                     </div>
-                  </div>
-               </li>
-               <li class="users__item">
-                  <div class="users__name">Mykyta Tsykunov</div>
-                  <div class="users__info">
-                     <div class="users__type">
-                        Teacher
-                     </div>
-                     <div class="users__honorific">
-                        -
-                     </div>
-                  </div>
-               </li>
-               <li class="users__item">
-                  <div class="users__name">Mykyta Tsykunov</div>
-                  <div class="users__info">
-                     <div class="users__type">
-                        Teacher
-                     </div>
-                     <div class="users__honorific">
-                        -
-                     </div>
-                  </div>
-               </li>
+            <div class="users__top">
+               <a href="/signup" class="users__btn">Sign up</a>
+               <div class="users__title"><h1>All Users</h1></div>
+               <a href="/signup" class="users__btn">Sign up</a>
+            </div>
+            <ul class="users__tabs">
+               <li class="users__tab _active">Student</li>
+               <li class="users__tab _active">Teacher</li>
             </ul>
+            <ul class="users__list">
+               {% for user in users %}
+                  <li class="users__item {{ user.type }}">
+                     <div class="users__content">
+                        <div class="users__main">
+                           {% if user.honorific %}
+                              <div class="users__honorific">
+                                    {{ user.honorific }}
+                              </div>
+                           {% endif %}
+                           <div class="users__name">
+                              {{ user.firstname }} {{ user.lastname }}
+                           </div>
+                        </div>                     
+                        <div class="users__info">
+                           <div class="users__type">
+                              {{ user.type }}
+                           </div>
+                           <button class="users__login">
+                              Login
+                           </button>
+                        </div>
+                     </div>
+                  </li>
+               {% endfor %}
+            </ul>
+            <div class="users__empty {% if not users %}_show{% endif %}">
+               <p>No users found</p>
+            </div>
          </div>
       </div>
       <script src="static/js/vendors.min.js"></script>

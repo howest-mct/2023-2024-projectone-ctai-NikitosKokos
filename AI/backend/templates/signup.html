@@ -5,17 +5,17 @@
       <div class="form">
          <div class="form__body">
             <div class="form__title"><h1>FaceAuth</h1></div>
-            <form action="/users" method="post" class="form-main">
+            <form action="/users" class="form-main" method="post">
                <div class="form-main__input">
-                  <input class="input-anim" type="text" autocomplete="given-name" placeholder="First Name" name="userFirstName" id="userFirstName">
+                  <input required class="input-anim" type="text" autocomplete="given-name" placeholder="First Name" name="userFirstName" id="userFirstName">
                   <label for="userFirstName"></label>
                </div>
                <div class="form-main__input">
-                  <input class="input-anim" type="text" autocomplete="family-name" placeholder="Last Name" name="userLastName" id="userLastName">
+                  <input required class="input-anim" type="text" autocomplete="family-name" placeholder="Last Name" name="userLastName" id="userLastName">
                   <label for="userLastName"></label>
                </div>
                <div class="form-main__input form-main__input_password">
-                  <input class="input-anim" type="password" placeholder="Password" name="userPassword" id="userPassword">
+                  <input required class="input-anim" type="password" placeholder="Password" name="userPassword" id="userPassword">
                   <label for="userPassword"></label>
                   <div class="form-main__eye">
                      <svg>
@@ -58,7 +58,7 @@
                   </div>
                </div>
                <div class="form-main__bottom">
-                  <button class="form-main__btn btn">Sign up</button>
+                  <button type="submit" class="form-main__btn btn">Sign up</button>
                </div>
             </form>
          </div>

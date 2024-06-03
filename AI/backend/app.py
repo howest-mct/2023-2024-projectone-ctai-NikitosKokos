@@ -1,10 +1,12 @@
 from repositories.DataRepository import DataRepository
-from flask import Flask, request, jsonify, redirect,render_template
+from flask import Flask, request, jsonify, redirect,render_template, url_for, flash, session
 from flask_cors import CORS
+import secrets
 
 app = Flask(__name__)
 CORS(app)
 
+app.secret_key = secrets.token_hex(16)
 
 @app.route('/')
 def index():
@@ -14,8 +16,8 @@ def index():
 # address to get all customers. (GET method)
 @app.route('/users', methods=['GET'])
 def users():
-    data = DataRepository.read_users()
-    return render_template('users.html', users=data)
+    users = DataRepository.read_users()
+    return render_template('users.html', users=users)
 
 
 @app.route('/signup', methods=['GET'])
@@ -29,9 +31,16 @@ def add_user():
     # Use the name attributes from the <input> tags in your form as key
     print(request.form.get('honorific', ''), 'honorific')
     honorific = request.form.get('honorific', '')
+    print(honorific)
     users = DataRepository.read_users()
     the_new_id = DataRepository.create_user(request.form['userFirstName'], request.form['userLastName'], request.form['userPassword'], request.form['type'], honorific)
-    return render_template('users.html', the_new_id=the_new_id, users=users)
+    # the_new_name = f"{request.form['userFirstName']} {request.form['userLastName']}"
+    # return render_template('users.html', the_new_id=the_new_id, the_new_name=the_new_name, users=users)
+
+    the_new_name = f"{request.form['userFirstName']} {request.form['userLastName']}"
+    flash(f'User {the_new_name} has been successfully added with the id {the_new_id}!', 'success')
+
+    return redirect(url_for('users'))
 
 
 

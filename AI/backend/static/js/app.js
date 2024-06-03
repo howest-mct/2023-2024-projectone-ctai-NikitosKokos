@@ -119,18 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
    }
 
-   // * submit
-   // const signupForm = document.querySelector('.form-main');
-   // let inputName, inputLastName;
-
-   // if(signupForm){
-   //    inputName = signupForm.userFirstName
-   //    inputLastName = signupForm.userLastName
-   //    signupForm.addEventListener('submit', (e) => {
-   //       e.preventDefault();
-   //    });
-   // }
-
+   // * form
+   const signupForm = document.querySelector('.form-main');
+   let inputName, inputLastName, inputPassword;
+   if(signupForm){
+      inputName = signupForm.userFirstName
+      inputLastName = signupForm.userLastName
+      inputPassword = signupForm.userPassword
+   }
+         
    // * buttons
    const buttons = document.querySelectorAll('.btn');
    if(buttons.length > 0){
@@ -139,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
          if(e.offsetX === 0 && e.offsetY === 0){
             isUnFocus = true;
          }else if(signupForm){
-            if(document.activeElement === inputName || document.activeElement === inputLastName){
+            if(document.activeElement === inputName || document.activeElement === inputLastName || document.activeElement === inputPassword){
                isUnFocus = true;
             }
          }else if(e.pointerId === -1){
@@ -173,7 +170,71 @@ document.addEventListener('DOMContentLoaded', () => {
          });
       })      
    }
-   
+
+   // * tabs
+   const tabs = document.querySelectorAll('.users__tab');
+
+   if(tabs.length > 0){
+      const empty = document.querySelector('.users__empty');
+      const isEmpty = empty.classList.contains('_show');
+      const popup = document.querySelector('.users__popup');
+
+      if(popup){
+         setTimeout(() => {
+            popup.classList.add('show');
+         }, 0);
+
+         setTimeout(() => {
+            popup.classList.remove('show');
+         }, 5000);
+      }
+
+
+      tabs.forEach(tab => {
+         tab.addEventListener('click', () => {
+            tab.classList.toggle('_active');
+            // const value = Array.from(tabs).reduce((acc, el) => (el.classList.contains('_active') ? acc+1 : acc), 0);
+            // if(!value && !empty.classList.contains('_show')){
+            //    empty.classList.add('_show');
+            // }else if(!isEmpty){
+            //    empty.classList.remove('_show');
+            // }
+            updateFilters();
+         });
+      });
+
+
+      const filters = gsap.utils.toArray('.users__tab'),
+         items = gsap.utils.toArray('.users__item');
+
+      function updateFilters() {
+      const state = Flip.getState(items), // get the current state
+            classes = filters.filter(checkbox => checkbox.classList.contains('_active')).map(checkbox => "." + checkbox.textContent),
+            matches = classes.length ? gsap.utils.toArray(classes.join(",")) : classes;
+
+      // adjust the display property of each item ("none" for filtered ones, "inline-flex" for matching ones)
+      items.forEach(item => item.style.display = matches.indexOf(item) === -1 ? "none" : "inline-flex");
+
+      const value = Array.from(items).reduce((acc, el) => (matches.indexOf(el) === -1 ? acc : acc+1), 0);
+      
+      if(!value && !empty.classList.contains('_show')){
+         empty.classList.add('_show');
+      }else if(!isEmpty){
+         empty.classList.remove('_show');
+      }
+      
+      // animate from the previous state
+         Flip.from(state, {
+            duration: .6,
+         scale: true,
+         // absolute: true,
+         ease: "power1.inOut",
+            onEnter: elements => gsap.fromTo(elements, {opacity: 0, scale: 0}, {opacity: 1, scale: 1, duration: .6}),
+            onLeave: elements => gsap.to(elements, {opacity: 0, scale: 0, duration: .6})
+         }); 
+      }      
+   }
+
 
    
 }); // end;
