@@ -18,32 +18,53 @@ def main(lcd: LCD):
     device_name = "mykyta-rapsi" # TODO: replace with your own (unique) device name
     threading.Thread(target=ble_gatt_uart_loop, args=(rx_q, tx_q, device_name), daemon=True).start()
 
-    def get_spaces(spaces):
-      string = ''
-      for i in range(lcd.lcd_width - spaces):
-         string += ' '
+    def get_spaces(string):
+      spaces = ' ' * len(string)
          
-      return string
+      return spaces
     
-    isMacAddress = True
+    def split_string(input_string):
+        # Ensure the string is at most 32 characters long
+        trimmed_string = input_string[:32]
+        
+        # Get the first 16 symbols
+        first_part = trimmed_string[:16]
+        
+        # Get the second 16 symbols
+        second_part = trimmed_string[16:32]
+        
+        return first_part, second_part
+
+    def lcd_print(string):
+        if len(string) > 32:
+            print(f'String {string} is too big: {len(string)}')
+
+        if len(string) <= 16:
+            lcd.send_string(f"{string}{get_spaces(string)}",1)
+            lcd.send_string(" " * 16,2)
+        else:
+            first_part, second_part = split_string(string)
+            lcd.send_string(first_part,1)
+            lcd.send_string(second_part,2)
+    
+    is_first_run = True
 
     while True:
         try:
             incoming = rx_q.get(timeout=1) # Wait for up to 1 second 
             if incoming:
-                print("In main loop: {}".format(incoming))
-                if isMacAddress:
-                    lcd.send_string(f"{incoming}",2)
-                    isMacAddress = False
+                print("In main loop: ({})".format(incoming))
+                if is_first_run:
+                    lcd.send_string(f"   Welcome to   ",1)
+                    lcd.send_string(f"    FaceAuth    ",2)
+                    is_first_run = False
                 else:
-                    ndrones_str = f"Num Drones: "
-                    lcd.send_string(f"{ndrones_str}{get_spaces(len(ndrones_str+incoming))}{incoming}",1)
+                    lcd_print(incoming)
+                    # ndrones_str = f"Num Drones: "
+                    # lcd.send_string(f"{ndrones_str}{get_spaces(len(ndrones_str+incoming))}{incoming}",1)
         except Exception as e:
             pass # nothing in Q 
-            
-        # if i%5 == 0: # Send some data every 5 iterations
-        #     tx_q.put("test{}".format(i))
-        # i += 1
+        
 if __name__ == '__main__':
     lcd = LCD()
     try:

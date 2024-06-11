@@ -4,7 +4,7 @@ from ultralytics import YOLO
 import os
 
 def predict_user(user_id):
-   response = ""
+   response = ''
    try:
       # Load the YOLO model
       detection_model = YOLO(r"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\models\detect\train5\weights\best.pt")
@@ -23,10 +23,7 @@ def predict_user(user_id):
       correct_predictions = 0
       first_run = True
 
-      while (time.time() - start_time < duration) or first_run:
-         if first_run:
-            start_time = time.time()
-            first_run = False
+      while ((time.time() - start_time < duration) or first_run) and not response:
          
          ret, frame = cap.read()
 
@@ -48,20 +45,31 @@ def predict_user(user_id):
                   classification_results = classification_model(cropped_image)
 
                   if classification_results and len(classification_results) > 0:
-                        classification_result = classification_results[0]
-                        if classification_result.boxes is not None and len(classification_result.boxes) > 0:
-                           print(f"Classification result: {classification_result.boxes.cls}")
-                           predicted_class = int(classification_result.boxes.cls[0])
-                           if predicted_class == user_id:
-                              correct_predictions += 1
+                     classification_result = classification_results[0]
+                     if classification_result.probs is not None:
+                        class_probs = classification_result.probs.cpu().numpy()
+
+                        # Access the top1 attribute for the predicted class
+                        predicted_class = classification_result.probs.top1
+                        # print(f"Predicted class: {classification_result.probs.top1conf}, User ID: {user_id}")
+                        if classification_result.names[predicted_class] == str(user_id):
+                           if classification_result.probs.top1conf > 0.9:
+                              response = 'Ok'
+
 
          # Calculate accuracy
-         if total_frames > 0:
-            accuracy = (correct_predictions / total_frames) * 100
-         else:
-            accuracy = 0
+         # if total_frames > 0:
+         #    accuracy = (correct_predictions / total_frames) * 100
+         # else:
+         #    accuracy = 0
 
-         response = accuracy
+         # response = accuracy
+
+         if first_run:
+            start_time = time.time()
+            first_run = False
+         print('helloo', round((time.time() - start_time)))
+         
 
    except Exception as e:
       response = f"Exception occurred: {e}"
@@ -72,6 +80,3 @@ def predict_user(user_id):
       cv2.destroyAllWindows()
 
    return response
-
-prediction = predict_user(1)
-print(prediction)

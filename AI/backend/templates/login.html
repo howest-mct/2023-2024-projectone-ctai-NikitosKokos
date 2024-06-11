@@ -1,1 +1,26 @@
-Login {{ user_id }}
+<!DOCTYPE html>
+<html lang="en">
+    <head>	<title>Auth</title>	<meta charset="UTF-8">	<meta name="format-detection" content="telephone=no">	<link rel="stylesheet" href="/static/css/style.min.css">	<!-- <meta name="theme-color" content="#fff"> -->	<!-- <meta name="theme-color" content="#F2709C"/>	 -->	<link rel="shortcut icon" href="/static/img/logo/icon.svg">	<!-- <meta name="robots" content="noindex, nofollow"> -->	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->	<meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+   <body>
+      <div class="auth" data-id="{{ user_id }}">
+         <div class="auth__body">
+            <div class="auth__title auth__title_lock">
+               Look into<br> the camera
+            </div>
+            <div class="auth__title auth__title_open">
+               Welcome!
+            </div>
+            <div class="auth__icon">
+               <picture><source srcset="/static/img/icons/lock.svg" type="image/webp"><img src="/static/img/icons/lock.svg" alt=""></picture>
+            </div>
+            <div class="auth__open">
+               <div class="auth__key">
+                  <picture><source srcset="/static/img/icons/key.svg" type="image/webp"><img src="/static/img/icons/key.svg" alt=""></picture>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="/static/js/vendors.min.js"></script>
+      <script src="/static/js/app.min.js"></script>
+   </body>
+</html>

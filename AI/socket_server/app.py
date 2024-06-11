@@ -4,6 +4,7 @@ from detection import capture_images_with_yolo
 from split import split_dataset_by_class
 from train_detection import train_detection
 from best import get_the_best_model
+from predict import predict_user
 import os
 
 CONCURRENT_CONNECTIONS = 5
@@ -39,6 +40,8 @@ def handle_client(client_socket):
             elif task_type == "BEST":
                 get_the_best_model()
                 response = "The best model found"
+            elif task_type == "PREDICT":
+                response = predict_user(user_id)
             else:
                 response = "Unknown task type."
 

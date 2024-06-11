@@ -12,61 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
    })
 
-   const auth = document.querySelector('.auth');
-   if(auth){
-      document.body.style.backgroundColor = "#F2709C";
-      setTimeout(() => {
-         auth.classList.add('_lock');
-         document.body.style.transition = 'background-color .3s cubic-bezier(0.34, 1.55, 0.64, 1)';
-      }, 200);
-   
-      // setTimeout(() => {
-      //    auth.classList.add('_open');
-      //    document.body.style.backgroundColor = "#fff";
-      // }, 2200);
-      const pressEnter = (e) => {
-         if(e.code == 'Space'){
-            auth.classList.add('_open');
-            document.body.style.backgroundColor = "#fff";
-         }
-      }
-      document.addEventListener("keydown", pressEnter);
-   
-
-      const setAnimation = () => {
-         // --anim: cubic-bezier(0.34, 1.55, 0.64, 1);
-         const value = 1.55;
-         const w = window.innerWidth;
-         const h = window.innerHeight;
-         const wValue = value * (((w - 1920) * -0.001) + 1)
-         // console.log(wValue);
-         // auth.style.setProperty('--anim', `cubic-bezier(0.34, ${wValue}, 0.64, 1)`);
-      }
-
-      window.addEventListener('resize', setAnimation);
-      setAnimation();
-
-      const authCont = document.querySelector('.auth__open');
-      const getMinValues = () => {
-         let minW = authCont.offsetWidth; // 33.75
-         let minH = authCont.offsetHeight; // 66.66...
-         setInterval(() => {
-            if(minW > authCont.offsetWidth){
-               minW = authCont.offsetWidth
-            }
-            if(minH > authCont.offsetHeight){
-               minH = authCont.offsetHeight
-            }
-         }, 1);
-         setTimeout(() => {
-            console.log('minW',minW/authCont.offsetWidth * 100);
-            console.log('minH',minH/authCont.offsetHeight * 100);
-         }, 2000);
-      }
-
-      getMinValues();
-   }
-
    const inputs = document.querySelectorAll('.input-anim');
 
    if(inputs.length > 0){
@@ -369,6 +314,77 @@ document.addEventListener('DOMContentLoaded', () => {
       });
    }
 
+
+   // * auth
+   const auth = document.querySelector('.auth');
+   if(auth){
+      document.body.style.backgroundColor = "#F2709C";
+      setTimeout(() => {
+         auth.classList.add('_lock');
+         document.body.style.transition = 'background-color .3s cubic-bezier(0.34, 1.55, 0.64, 1)';
+      }, 200);
+   
+      const loggedIn = () => {
+         auth.classList.add('_open');
+         document.body.style.backgroundColor = "#fff";
+      }
+   
+
+      const setAnimation = () => {
+         // --anim: cubic-bezier(0.34, 1.55, 0.64, 1);
+         const value = 1.55;
+         const w = window.innerWidth;
+         const h = window.innerHeight;
+         const wValue = value * (((w - 1920) * -0.001) + 1)
+         // console.log(wValue);
+         // auth.style.setProperty('--anim', `cubic-bezier(0.34, ${wValue}, 0.64, 1)`);
+      }
+
+      window.addEventListener('resize', setAnimation);
+      setAnimation();
+
+      const authCont = document.querySelector('.auth__open');
+      const getMinValues = () => {
+         let minW = authCont.offsetWidth; // 33.75
+         let minH = authCont.offsetHeight; // 66.66...
+         setInterval(() => {
+            if(minW > authCont.offsetWidth){
+               minW = authCont.offsetWidth
+            }
+            if(minH > authCont.offsetHeight){
+               minH = authCont.offsetHeight
+            }
+         }, 1);
+         setTimeout(() => {
+            console.log('minW',minW/authCont.offsetWidth * 100);
+            console.log('minH',minH/authCont.offsetHeight * 100);
+         }, 2000);
+      }
+
+      getMinValues();
+
+      fetch('/auth', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+        },
+         body: JSON.stringify({ userId: auth.dataset.id })  // Example data to send
+     })
+     .then(response => {
+         if (!response.ok) {
+            throw new Error('Failed to start detection task');
+         }
+         return response.json();
+     })  // Handle successful response (optional)
+     .then(data => {
+         console.log(data.message); // Log the message from the server
+         if(data.message === 'Ok'){
+            loggedIn();
+         }
+      // Call a function to check the status of the detection task
+      })
+     .catch(error => console.error(error)); 
+   }
 
    
 }); // end;
