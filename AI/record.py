@@ -7,7 +7,7 @@ import os
 model = YOLO(r"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\runs\detect\train5\weights\best.pt")
 
 # Create a directory to save images
-output_dir = 'captured_images'
+output_dir = 'AI/captured_images'
 os.makedirs(output_dir, exist_ok=True)
 
 # Open webcam (source=0)

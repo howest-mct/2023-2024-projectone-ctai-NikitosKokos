@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>	<title>Recording</title>	<meta charset="UTF-8">	<meta name="format-detection" content="telephone=no">	<link rel="stylesheet" href="/static/css/style.min.css"><link rel="shortcut icon" href="/static/img/logo/icon.svg"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+   <body>
+      <div class="record">
+         <div class="record__body">
+            <div class="record__title"><h1>Let's record your face</h1></div>
+            <div class="record__main">
+               <div class="record__icon">
+                  <img src="/static/img/icons/face.svg" alt="">
+                  <img class="_hide" src="/static/img/icons/rotate.svg" alt="">
+               </div>
+               <div class="record__bottom">
+                  <button data-id='{{ user_id }}' class="record__btn">
+                     Start recording
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="progress _hide">
+         <div class="progress__body">
+            <div class="progress__title"><h1>Almost there!</h1></div>
+            <ul class="progress__steps">
+               <li class="progress__step _progress">
+                  <div class="progress__icon">
+                     <svg>
+                        <use xlink:href='/static/img/sprite.svg#folder'></use>
+                     </svg>
+                  </div>
+                  <p class="progress__descr">Making a dataset</p>
+               </li>
+               <li class="progress__step">
+                  <div class="progress__icon">
+                     <svg>
+                        <use xlink:href='/static/img/sprite.svg#study'></use>
+                     </svg>
+                  </div>
+                  <p class="progress__descr">Training a model</p>
+               </li>
+               <li class="progress__step">
+                  <div class="progress__icon">
+                     <svg>
+                        <use xlink:href='/static/img/sprite.svg#star'></use>
+                     </svg>
+                  </div>
+                  <p class="progress__descr">Choosing the best model</p>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <script src="/static/js/vendors.min.js"></script>
+      <script src="/static/js/app.min.js"></script>
+   </body>
+</html>

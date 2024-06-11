@@ -235,6 +235,140 @@ document.addEventListener('DOMContentLoaded', () => {
       }      
    }
 
+   // * record
+
+   const recordBtn = document.querySelector('.record__btn');
+
+   if(recordBtn){
+      const icon1 = document.querySelector('.record__icon img');
+      const icon2 = document.querySelector('.record__icon img._hide');
+      const title = document.querySelector('.record__title');
+      const record = document.querySelector('.record');
+      const progress = document.querySelector('.progress');
+      const steps = Array.from(document.querySelectorAll('.progress__step'));
+
+      const makeDataset = () => {
+         record.classList.add('_hide');
+         progress.classList.remove('_hide');
+
+         fetch('/split', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+           },
+            body: JSON.stringify({ className: recordBtn.dataset.id })  // Example data to send
+        })
+        .then(response => {
+            if (!response.ok) {
+               throw new Error('Failed to start detection task');
+            }
+            return response.json();
+        })  // Handle successful response (optional)
+        .then(data => {
+            console.log(data.message); // Log the message from the server
+            if(data.message === 'Ok'){
+               trainModel();
+            }
+         // Call a function to check the status of the detection task
+         })
+        .catch(error => console.error(error));  // Handle errors
+      }
+
+      const trainModel = () => {
+         steps[0].classList.remove('_progress');
+         steps[0].classList.add('_done');
+         steps[1].classList.add('_progress');
+
+         fetch('/train', {
+            method: 'GET',
+            headers: {
+               'Content-Type': 'application/json'
+           },
+            // body: JSON.stringify({ className: recordBtn.dataset.id })  // Example data to send
+        })
+        .then(response => {
+            if (!response.ok) {
+               throw new Error('Failed to start detection task');
+            }
+            return response.json();
+        })  // Handle successful response (optional)
+        .then(data => {
+            console.log(data.message); // Log the message from the server
+            if(data.message === 'Ok'){
+               chooseTheBest();
+            }
+         // Call a function to check the status of the detection task
+         })
+        .catch(error => console.error(error));  // Handle errors
+      }
+
+      const chooseTheBest = () => {
+         steps[1].classList.remove('_progress');
+         steps[1].classList.add('_done');
+         steps[2].classList.add('_progress');
+
+         fetch('/best', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+           },
+            body: JSON.stringify({ userId: recordBtn.dataset.id })
+        })
+        .then(response => {
+            if (response.status === 200) {
+               return response.json();
+            } else if (response.status === 302) {
+                  // Handle redirection manually
+                  window.location.href = response.url;
+            } else {
+                  throw new Error('Failed to start detection task');
+            }
+        })  // Handle successful response (optional)
+        .then(data => {
+            if (data.redirect_url) {
+               window.location.href = data.redirect_url;
+            } else {
+               console.log(data.message);
+            }
+         })
+        .catch(error => console.error(error));  // Handle errors
+      }
+
+      recordBtn.addEventListener('click', () => {
+         icon1.classList.add('_hide');
+         icon2.classList.remove('_hide');
+         recordBtn.textContent = 'Recording...';
+         recordBtn.disabled = true;
+         title.textContent = 'Move your head a bit';
+
+         fetch('/recording', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+           },
+            body: JSON.stringify({ userId: recordBtn.dataset.id })  // Example data to send
+        })
+        .then(response => {
+            if (!response.ok) {
+               throw new Error('Failed to start detection task');
+            }
+            return response.json();
+        })  // Handle successful response (optional)
+        .then(data => {
+         console.log(data.message); // Log the message from the server
+         if(data.message === 'Ok'){
+            makeDataset();
+         }
+         // Call a function to check the status of the detection task
+     })
+        .catch(error => console.error(error));  // Handle errors
+
+         // setTimeout(() => {
+         //    makeDataset();
+         // }, 1000);
+      });
+   }
+
 
    
 }); // end;

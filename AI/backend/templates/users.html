@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>	<title>All Users</title>	<meta charset="UTF-8">	<meta name="format-detection" content="telephone=no">	<link rel="stylesheet" href="static/css/style.min.css">	<!-- <meta name="theme-color" content="#fff"> -->	<!-- <meta name="theme-color" content="#F2709C"/>	 -->	<link rel="shortcut icon" href="static/img/logo/icon.svg">	<!-- <meta name="robots" content="noindex, nofollow"> -->	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->	<meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+    <head>	<title>All Users</title>	<meta charset="UTF-8">	<meta name="format-detection" content="telephone=no">	<link rel="stylesheet" href="static/css/style.min.css"><link rel="shortcut icon" href="static/img/logo/icon.svg"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
    <body>
       <div class="users">
          {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="users__popup">
-                    {% for category, message in messages %}
+               {% if messages[0][0] == 'name' %}
+                  <div class="users__popup">
                         <div class="users__added">
-                            <div class="users__check">
-                                <span></span>
-                                <picture><source srcset="static/img/icons/check.svg" type="image/webp"><img src="static/img/icons/check.svg" alt=""></picture>
-                            </div>
-                            <div class="users__text">
-                                {{ message }}
-                            </div>
+                              <div class="users__check">
+                                 <span></span>
+                                 <picture><source srcset="static/img/icons/check.svg" type="image/webp"><img src="static/img/icons/check.svg" alt=""></picture>
+                              </div>
+                              <div class="users__text">
+                                 User <b>{{ messages[0][1] }}</b> has been successfully added with the id <b>{{ messages[1][1] }}</b>!
+                              </div>
                         </div>
-                    {% endfor %}
-                </div>
+                  </div>
+               {% elif messages[0][0] == 'trained' %}
+                  <div class="users__popup">
+                     <div class="users__added">
+                           <div class="users__check">
+                              <span></span>
+                              <picture><source srcset="static/img/icons/check.svg" type="image/webp"><img src="static/img/icons/check.svg" alt=""></picture>
+                           </div>
+                           <div class="users__text">
+                              Model has been trained! You can now login via your face.
+                           </div>
+                     </div>
+               </div>
+               {% endif %}
             {% endif %}
         {% endwith %}
          <div class="users__body">
@@ -33,7 +45,7 @@
             <ul class="users__list">
                {% for user in users %}
                   <li class="users__item {{ user.type }}">
-                     <div class="users__content">
+                     <form action="{{ url_for('login', user_id=user.userId) }}" method="POST" class="users__content">
                         <div class="users__main">
                            {% if user.honorific %}
                               <div class="users__honorific">
@@ -48,11 +60,11 @@
                            <div class="users__type">
                               {{ user.type }}
                            </div>
-                           <button class="users__login">
-                              Login
+                           <button type="submit" class="users__login">
+                              {{ 'Login' if user.recorded else 'Record' }}
                            </button>
                         </div>
-                     </div>
+                     </form>
                   </li>
                {% endfor %}
             </ul>

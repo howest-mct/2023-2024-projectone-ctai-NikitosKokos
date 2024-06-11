@@ -77,8 +77,11 @@ sympy==1.12
 thop==0.1.1.post2209072238
 tomlkit==0.12.0
 toolz==0.12.1
-torch==2.2.2
-torchvision==0.17.2
+# torch==2.2.2
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.2
+# torchvision==0.17.2
 tqdm==4.66.2
 typer==0.12.3
 typing_extensions==4.11.0
@@ -89,7 +92,6 @@ uvicorn==0.29.0
 websockets==11.0.3
 autopep8==2.0.4
 blinker==1.7.0
-click==8.1.7
 Flask==3.0.2
 Flask-Cors==4.0.0
 itsdangerous==2.1.2

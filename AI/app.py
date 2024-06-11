@@ -6,7 +6,7 @@ import asyncio
 from queue import Queue
 import threading
 import time
-from BLE_client import run
+from AI.backend.BLE_client import run
 import cv2  # Importing the OpenCV library for computer vision tasks.
 import supervision as sv  # Importing a module named supervision as sv.
 # Importing YOLO object detection model from ultralytics library.
