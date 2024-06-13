@@ -26,4 +26,3 @@ def get_the_best_model():
         print(f"Copied {best_pt_path} to {destination_path}")
     else:
         print("No valid training directories found with weights/best.pt.")
-

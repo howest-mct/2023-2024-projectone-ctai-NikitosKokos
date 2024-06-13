@@ -36,3 +36,10 @@ class DataRepository:
         sql = "UPDATE users SET recorded = 1 WHERE userId = %s"
         params = [user_id]
         return Database.execute_sql(sql, params)
+    
+    @staticmethod
+    def get_name(user_id):
+        # tblKlant is the name of the table in the database. (klant = customer in dutch)
+        sql = "SELECT firstname, honorific FROM users WHERE userId=%s"
+        params = [user_id]
+        return Database.get_rows(sql, params)

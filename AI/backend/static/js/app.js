@@ -328,6 +328,10 @@ document.addEventListener('DOMContentLoaded', () => {
          auth.classList.add('_open');
          document.body.style.backgroundColor = "#fff";
       }
+
+      const errorLoggedIn = () => {
+         auth.classList.add('_error');
+      }
    
 
       const setAnimation = () => {
@@ -363,6 +367,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       getMinValues();
 
+      // setTimeout(() => {
+      //    errorLoggedIn();
+      // }, 2000);
+
       fetch('/auth', {
          method: 'POST',
          headers: {
@@ -380,6 +388,8 @@ document.addEventListener('DOMContentLoaded', () => {
          console.log(data.message); // Log the message from the server
          if(data.message === 'Ok'){
             loggedIn();
+         }else{
+            errorLoggedIn();
          }
       // Call a function to check the status of the detection task
       })

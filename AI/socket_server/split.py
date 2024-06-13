@@ -39,6 +39,6 @@ def split_dataset_by_class(class_name, train_ratio=0.7, val_ratio=0.2, test_rati
 
 
 # if __name__ == '__main__':
-#     class_name = "2"  # Change this to the name of your class folder
+#     class_name = "unknown"  # Change this to the name of your class folder
 #     split_dataset_by_class(class_name, train_ratio=0.7)
-#     train_detection()
+    # train_detection()

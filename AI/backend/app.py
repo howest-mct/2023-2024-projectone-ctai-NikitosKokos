@@ -92,6 +92,8 @@ def auth_user():
         data = request.get_json()  # Access the JSON data sent by the AJAX request
         user_id = data['userId']  # Extract the user ID
 
+        response = DataRepository.get_name(user_id)
+
         task_thread = threading.Thread(target=run_task, args=("PREDICT", user_id))
         task_thread.start()
 
@@ -99,9 +101,11 @@ def auth_user():
 
         if not is_logged_in:
             print("Couldn't login")
-            tx_q.put(" Couldn't login    Try again   ")
+            tx_q.put(" Couldn't login    Try again    ")
         else:
-            tx_q.put(f"Welcome!")
+            honorific = f"{response[0]['honorific']} " if response[0]['honorific'] not in ('', '-') else ''
+            print(1, honorific, 1)
+            tx_q.put(f"Welcome {honorific}{response[0]['firstname']}")
 
         return jsonify({'message': is_logged_in})
     except Exception as e:
@@ -157,7 +161,7 @@ def recording():
 @app.route('/split', methods=['POST'])
 def split():
     try:
-        tx_q.put(f"Making a dataset ")
+        tx_q.put(f"Making a dataset")
 
         data = request.get_json()
         class_name = data['className']
@@ -198,8 +202,6 @@ def best():
 
         task_thread.join()
 
-        # return jsonify({'message': 'Ok'})
-
         DataRepository.set_recorded(user_id)
 
         flash('trained', 'trained')
@@ -238,8 +240,8 @@ def init_ble_thread():
     ble_client_thread.start()
 
 if __name__ == '__main__':
-    init_ble_thread()
+    # init_ble_thread()
 
-    tx_q.put(targetDeviceMac)
+    # tx_q.put('   Welcome to       FaceAuth    ')
 
     app.run(host='127.0.0.1', port=5000, debug=True)
