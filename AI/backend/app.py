@@ -117,10 +117,10 @@ def check_password(user_id):
     data = DataRepository.get_password(user_id)
 
     if user_password == data[0]['password']:
-        tx_q.put(f"  Let's record    Your face      ")
+        tx_q.put(f"  Let's record     Your face    ")
         return render_template('record.html', user_id=user_id)
     else:
-        tx_q.put(f"  Incorrect       password    ")
+        tx_q.put(f"   Incorrect        password    ")
         return render_template('password.html', user_id=user_id, error="Incorrect password")
 
 
@@ -197,7 +197,7 @@ def best():
         data = request.get_json()  # Access the JSON data sent by the AJAX request
         user_id = data['userId']  # Extract the user ID
 
-        task_thread = threading.Thread(target=run_task, args=("BEST", None))
+        task_thread = threading.Thread(target=run_task, args=("BEST", user_id))
         task_thread.start()
 
         task_thread.join()
@@ -240,8 +240,8 @@ def init_ble_thread():
     ble_client_thread.start()
 
 if __name__ == '__main__':
-    # init_ble_thread()
+    init_ble_thread()
 
-    # tx_q.put('   Welcome to       FaceAuth    ')
+    tx_q.put('   Welcome to       FaceAuth    ')
 
     app.run(host='127.0.0.1', port=5000, debug=True)

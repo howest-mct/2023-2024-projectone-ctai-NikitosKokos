@@ -1,7 +1,7 @@
 import os
 import shutil
 
-def get_the_best_model():
+def get_the_best_model(user_id):
     # Find the folder with the highest number containing weights/best.pt
     classify_runs_dir = r"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\runs\classify"
     highest_num = -1
@@ -19,7 +19,7 @@ def get_the_best_model():
 
     if highest_num_dir:
         best_pt_path = os.path.join(classify_runs_dir, highest_num_dir, "weights", "best.pt")
-        destination_dir = r"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\models\classify"
+        destination_dir = fr"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\models\classify\{user_id}"
         os.makedirs(destination_dir, exist_ok=True)
         destination_path = os.path.join(destination_dir, "best.pt")
         shutil.copyfile(best_pt_path, destination_path)

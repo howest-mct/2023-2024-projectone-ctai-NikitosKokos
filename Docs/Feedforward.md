@@ -85,3 +85,7 @@ This is the feedback on my questions.
 ## MVP02: working model (Date: 04/06/2024)
 
 After the last feedback I completely retrained my model using a new dataset, so the accuracy was about 99% on the test, but for the video it was of course a bit lower, but still about 90% faces were captured. I also asked about how to make a face recognition model, we've talked with Marie and I said I will be busy doing it this week. I also showed that I can already add a new user to my database and that my Flask part is already done.
+
+## MVP03: communication (Date: 11/06/2024)
+
+I made my classification model and show my working program to Stijn, the model took a pictures of Stijn split it into train, test and val sets, then Stijn successfully logged in, and the welcome message printed on LCD Display in my box, he said that it would be nice to also print the name of the user on LCD Display, I said I was going to do it and also if the user is Teacher print Mr/Ms before name. My project is almost finished, so I just have to refactor some code and do deployment, so when I turn on my raspi it automatically opens a connection.

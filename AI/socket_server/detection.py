@@ -116,5 +116,5 @@ def capture_images_with_yolo(user_id):
 
 # # Example usage:
 # user_id = 'test'
-# result = capture_images_with_augmentation(user_id)
+# result = capture_images_with_yolo(user_id)
 # print("Capture result:", result)

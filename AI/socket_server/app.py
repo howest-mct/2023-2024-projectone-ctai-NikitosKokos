@@ -38,7 +38,7 @@ def handle_client(client_socket):
             elif task_type == "TRAIN":
                 response = train_detection()
             elif task_type == "BEST":
-                get_the_best_model()
+                get_the_best_model(user_id)
                 response = "The best model found"
             elif task_type == "PREDICT":
                 response = predict_user(user_id)

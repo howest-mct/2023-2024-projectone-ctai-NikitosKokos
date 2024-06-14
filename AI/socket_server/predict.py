@@ -3,19 +3,33 @@ import time
 from ultralytics import YOLO
 import os
 
-def convert_to_grayscale(image):
-    # Convert the image to grayscale
+def resize_and_pad(image, target_size):
+    # Convert image to grayscale
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    # Convert grayscale image back to BGR (if needed)
-    # gray_image = cv2.cvtColor(gray_image, cv2.COLOR_GRAY2BGR)
-    return gray_image
+
+    h, w = gray_image.shape[:2]
+    scale = target_size / max(h, w)
+    new_w, new_h = int(w * scale), int(h * scale)
+    resized_image = cv2.resize(gray_image, (new_w, new_h))
+
+    top = bottom = (target_size - new_h) // 2
+    left = right = (target_size - new_w) // 2
+
+    padded_image = cv2.copyMakeBorder(
+        resized_image, top, bottom, left, right,
+        borderType=cv2.BORDER_CONSTANT, value=0
+    )
+
+    return padded_image
 
 def predict_user(user_id):
     response = ''
     try:
         # Load the YOLO models
         detection_model = YOLO(r"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\models\detect\train5\weights\best.pt")
-        classification_model = YOLO(r"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\models\classify\best.pt")
+        # Load the YOLO classification model for the specific user
+        classification_model_path = fr"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\models\classify\{user_id}\best.pt"
+        classification_model = YOLO(classification_model_path)
 
         # Attempt to open the video capture device
         cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
@@ -35,6 +49,10 @@ def predict_user(user_id):
         total_frames = 0
         first_run = True
 
+        # Directory to save high-confidence images
+        save_dir = r"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\dataset\login"
+        os.makedirs(save_dir, exist_ok=True)
+
         while ((time.time() - start_time < duration) or first_run) and not response:
             ret, frame = cap.read()
 
@@ -53,7 +71,7 @@ def predict_user(user_id):
                         cropped_image = frame[y1:y2, x1:x2]
                         
                         # Convert cropped image to grayscale
-                        gray_cropped_image = convert_to_grayscale(cropped_image)
+                        gray_cropped_image = resize_and_pad(cropped_image, 320)
 
                         # Use classification model to classify the grayscale cropped image
                         classification_results = classification_model(gray_cropped_image)
@@ -65,9 +83,13 @@ def predict_user(user_id):
 
                                 # Access the top1 attribute for the predicted class
                                 predicted_class = classification_result.probs.top1
-                                if classification_result.names[predicted_class] == str(user_id):
+                                if classification_result.names[predicted_class] == 'user':
                                     if classification_result.probs.top1conf > 0.9:
                                         response = 'Ok'
+                                        # Save the high-confidence image
+                                        timestamp = time.strftime("%Y%m%d-%H%M%S")
+                                        image_path = os.path.join(save_dir, f"{user_id}_{timestamp}.jpg")
+                                        cv2.imwrite(image_path, gray_cropped_image)
 
             if first_run:
                 first_run = False
@@ -83,4 +105,3 @@ def predict_user(user_id):
         cv2.destroyAllWindows()
 
     return response
-

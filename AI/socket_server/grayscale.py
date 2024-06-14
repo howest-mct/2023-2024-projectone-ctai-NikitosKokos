@@ -16,7 +16,7 @@ def grayscale_images_in_folder(folder_path):
                 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
                 
                 # Overwrite the original image with the grayscale version
-                cv2.imwrite(os.path.join(folder_path, 'p_'+filename), gray_image)
+                cv2.imwrite(os.path.join(folder_path, 'c_'+filename), gray_image)
                 
                 print(f"Converted {filename} to grayscale.")
     
@@ -24,5 +24,5 @@ def grayscale_images_in_folder(folder_path):
         print(f"An error occurred: {e}")
 
 # Example usage:
-folder_path = r'D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\dataset\test'
+folder_path = r'D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\dataset\5'
 grayscale_images_in_folder(folder_path)
