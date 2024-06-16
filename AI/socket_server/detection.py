@@ -113,8 +113,3 @@ def capture_images_with_yolo(user_id):
         cv2.destroyAllWindows()
 
     return response
-
-# # Example usage:
-# user_id = 'test'
-# result = capture_images_with_yolo(user_id)
-# print("Capture result:", result)

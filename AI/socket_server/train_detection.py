@@ -32,6 +32,3 @@ def train_detection():
         response = f"Exception occurred: {e}"
     
     return response
-
-# if __name__ == '__main__':
-#     print(train_detection())

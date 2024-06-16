@@ -23,14 +23,6 @@ CORS(app)
 
 app.secret_key = secrets.token_hex(16)
 
-# Redirect stderr to /dev/null
-# devnull = os.open(os.devnull, os.O_WRONLY)
-# old_stderr = os.dup(2)
-# os.dup2(devnull, 2)
-# Redirect stderr to /dev/null or similar mechanism
-# devnull = open(os.devnull, 'w')
-# old_stderr = sys.stderr
-# sys.stderr = devnull
 
 @app.route('/')
 def index():
@@ -221,8 +213,6 @@ def add_user():
     honorific = request.form.get('honorific', '')
     
     the_new_id = DataRepository.create_user(request.form['userFirstName'], request.form['userLastName'], request.form['userPassword'], request.form['type'], honorific, 0)
-    # the_new_name = f"{request.form['userFirstName']} {request.form['userLastName']}"
-    # return render_template('users.html', the_new_id=the_new_id, the_new_name=the_new_name, users=users)
 
     the_new_name = f"{request.form['userFirstName']} {request.form['userLastName']}"
     flash(the_new_name, 'name')
