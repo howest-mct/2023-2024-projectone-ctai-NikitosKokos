@@ -58,7 +58,7 @@ def capture_images_with_yolo(user_id):
         cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)  # Disable auto exposure (value may vary)
         cap.set(cv2.CAP_PROP_BRIGHTNESS, 0.5)  # Adjust brightness (0.0 to 1.0)
         cap.set(cv2.CAP_PROP_CONTRAST, 0.5)    # Adjust contrast (0.0 to 1.0)
-        cap.set(cv2.CAP_PROP_EXPOSURE, -4)     # Adjust exposure (varies by camera, may need tuning)
+        cap.set(cv2.CAP_PROP_EXPOSURE, -4)     # Adjust exposure (varies by camera)
 
         fps = 30
         frames_to_capture = 10

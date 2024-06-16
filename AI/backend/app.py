@@ -1,5 +1,5 @@
 from repositories.DataRepository import DataRepository
-from flask import Flask, request, jsonify, redirect,render_template, url_for, flash, session
+from flask import Flask, request, jsonify, redirect,render_template, url_for, flash
 from flask_cors import CORS
 import secrets
 import sys

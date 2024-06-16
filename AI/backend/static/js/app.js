@@ -316,36 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
          auth.classList.add('_error');
       }
 
-      // const setAnimation = () => {
-      //    const value = 1.55;
-      //    const w = window.innerWidth;
-      //    const h = window.innerHeight;
-      //    const wValue = value * (((w - 1920) * -0.001) + 1)
-      // }
-
-      // window.addEventListener('resize', setAnimation);
-      // setAnimation();
-
-      // const authCont = document.querySelector('.auth__open');
-      // const getMinValues = () => {
-      //    let minW = authCont.offsetWidth; // 33.75
-      //    let minH = authCont.offsetHeight; // 66.66...
-      //    setInterval(() => {
-      //       if(minW > authCont.offsetWidth){
-      //          minW = authCont.offsetWidth
-      //       }
-      //       if(minH > authCont.offsetHeight){
-      //          minH = authCont.offsetHeight
-      //       }
-      //    }, 1);
-      //    setTimeout(() => {
-      //       console.log('minW',minW/authCont.offsetWidth * 100);
-      //       console.log('minH',minH/authCont.offsetHeight * 100);
-      //    }, 2000);
-      // }
-
-      // getMinValues();
-
       fetch('/auth', {
          method: 'POST',
          headers: {
