@@ -5,7 +5,6 @@ def train_detection():
     try:
         # Load the YOLO model
         model = YOLO(model="yolov8s-cls.pt")
-        # model = YOLO(model="yolov8n.pt")
         
         # Set the device to GPU
         device = 'cuda'
@@ -32,6 +31,3 @@ def train_detection():
         response = f"Exception occurred: {e}"
     
     return response
-
-# if __name__ == '__main__':
-#     print(train_detection())

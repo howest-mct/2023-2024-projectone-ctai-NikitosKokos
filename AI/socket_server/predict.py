@@ -47,13 +47,12 @@ def predict_user(user_id):
         start_time = time.time()
         duration = 5  # capture for 5 seconds
         total_frames = 0
-        first_run = True
 
         # Directory to save high-confidence images
         save_dir = r"D:\Downloads\Howest\Semester 2\Project_one\2023-2024-projectone-ctai-NikitosKokos\AI\dataset\login"
         os.makedirs(save_dir, exist_ok=True)
 
-        while ((time.time() - start_time < duration) or first_run) and not response:
+        while (time.time() - start_time < duration) and not response:
             ret, frame = cap.read()
 
             if not ret:
@@ -86,13 +85,6 @@ def predict_user(user_id):
                                 if classification_result.names[predicted_class] == 'user':
                                     if classification_result.probs.top1conf > 0.9:
                                         response = 'Ok'
-                                        # Save the high-confidence image
-                                        timestamp = time.strftime("%Y%m%d-%H%M%S")
-                                        image_path = os.path.join(save_dir, f"{user_id}_{timestamp}.jpg")
-                                        cv2.imwrite(image_path, gray_cropped_image)
-
-            if first_run:
-                first_run = False
 
         print('Time elapsed:', round((time.time() - start_time), 2))
 

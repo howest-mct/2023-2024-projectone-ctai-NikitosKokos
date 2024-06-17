@@ -1,5 +1,3 @@
-// @ @include("libs/swiper.min.js", {});
-// @ @include("libs/typed.min.js", {});
 /*!
  * GSAP 3.12.6
  * https://gsap.com

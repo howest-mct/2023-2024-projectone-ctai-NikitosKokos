@@ -44,9 +44,3 @@ def split_dataset_by_class(class_name, train_ratio=0.7, val_ratio=0.2, test_rati
         shutil.copy(img_path, dest_path)
     
     print(f"Split user {class_name} images into train ({num_train}), val ({num_val}), and test ({num_test}) sets.")
-
-
-# if __name__ == '__main__':
-#     class_name = "unknown"  # Change this to the name of your class folder
-#     split_dataset_by_class(class_name, train_ratio=0.7)
-    # train_detection()
