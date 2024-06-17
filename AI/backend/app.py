@@ -10,8 +10,8 @@ from queue import Queue
 from BLE_client import run
 
 # Creating two Queues for communication between threads.
-tx_q = Queue()
-rx_q = Queue()
+tx_q = None
+rx_q = None
 
 targetDeviceName=None
 targetDeviceMac="D8:3A:DD:D9:6C:7F"
@@ -96,7 +96,6 @@ def auth_user():
             tx_q.put(" Couldn't login    Try again    ")
         else:
             honorific = f"{response[0]['honorific']} " if response[0]['honorific'] not in ('', '-') else ''
-            print(1, honorific, 1)
             tx_q.put(f"Welcome {honorific}{response[0]['firstname']}")
 
         return jsonify({'message': is_logged_in})
@@ -230,6 +229,9 @@ def init_ble_thread():
     ble_client_thread.start()
 
 if __name__ == '__main__':
+    tx_q = Queue()
+    rx_q = Queue()
+
     init_ble_thread()
 
     tx_q.put('   Welcome to       FaceAuth    ')
