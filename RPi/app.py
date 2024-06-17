@@ -5,9 +5,6 @@ from LCD import LCD
 # Bluez gatt uart service (SERVER)
 from bluetooth_uart_server.bluetooth_uart_server import ble_gatt_uart_loop
 
-# extend this code so the value received via Bluetooth gets printed on the LCD
-# (maybe together with you Bluetooth device name or Bluetooth MAC?)
-
 def main(lcd: LCD):
     # Initialise display
     lcd.init()
@@ -45,25 +42,16 @@ def main(lcd: LCD):
         else:
             first_part, second_part = split_string(string)
             lcd.send_string(first_part,1)
-            lcd.send_string(second_part,2)
-    
-    is_first_run = True
+            lcd.send_string(f'{second_part}{get_spaces(second_part)}',2)
 
     while True:
         try:
             incoming = rx_q.get(timeout=1) # Wait for up to 1 second 
             if incoming:
                 print("In main loop: ({})".format(incoming))
-                if is_first_run:
-                    lcd.send_string(f"   Welcome to   ",1)
-                    lcd.send_string(f"    FaceAuth    ",2)
-                    is_first_run = False
-                else:
-                    lcd_print(incoming)
-                    # ndrones_str = f"Num Drones: "
-                    # lcd.send_string(f"{ndrones_str}{get_spaces(len(ndrones_str+incoming))}{incoming}",1)
+                lcd_print(incoming)
         except Exception as e:
-            pass # nothing in Q 
+            pass # nothing in Q
         
 if __name__ == '__main__':
     lcd = LCD()
@@ -73,5 +61,3 @@ if __name__ == '__main__':
         pass
     finally:
         lcd.send_instruction(0x01) # Clear display & cursor home
-
-
